@@ -10,7 +10,7 @@ Functionality:
 
 - movie search (type a title into the search bar in the search tab)
 - adding movies to favourites (press on the heart button on the movie screen, in both tabs possible)
-- hiding movies from future search (sviping a movie to the left to hide it, only search tab)
+- hiding movies from future search (swipe a movie to the left to hide it, only search tab)
 - alert in case of lost internet connection
 - local storage (favourite and hidden movies persist on restart)
 
