@@ -1,7 +1,19 @@
 import 'package:flutter/cupertino.dart';
 
-const titleStyle = TextStyle(fontSize: 20, color: CupertinoColors.systemIndigo);
-const descriptionStyle = TextStyle(fontSize: 15, color: CupertinoColors.systemIndigo);
+const titleStyle = TextStyle(
+  fontSize: 20,
+  color: CupertinoColors.systemIndigo,
+);
+
+const descriptionStyle = TextStyle(
+  fontSize: 15,
+  color: CupertinoColors.systemIndigo,
+);
+
+const hintStyle = TextStyle(
+    fontSize: 15,
+    color: CupertinoColors.inactiveGray,
+    fontStyle: FontStyle.italic);
 
 const ratingStyle = TextStyle(
   color: CupertinoColors.white,
@@ -10,6 +22,7 @@ const ratingStyle = TextStyle(
 );
 
 const ratingGradient = LinearGradient(
-    colors: [CupertinoColors.destructiveRed, CupertinoColors.systemYellow],
-    begin: Alignment.bottomCenter,
-    end: Alignment.topCenter);
+  colors: [CupertinoColors.destructiveRed, CupertinoColors.systemYellow],
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+);

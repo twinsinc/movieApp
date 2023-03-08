@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 class Movie {
-  Movie(this.title, this.description, this.poster, this.rating, this.favourite);
+  Movie(this.id, this.title, this.description, this.poster, this.rating,
+      this.favourite);
 
+  final int id;
   final String title;
   final String description;
   final String poster;
@@ -10,12 +12,23 @@ class Movie {
   bool favourite;
 
   Movie.fromJson(Map<String, dynamic> json)
-      : title = json['original_title'],
+      : id = json['id'],
+        title = json['original_title'] ?? '',
         description = json['overview'],
-        poster = json['poster_path'],
+        poster = json['poster_path'] ?? '',
         rating = json['vote_average'].toString(),
         favourite = false;
+
+    Movie.fromStorage(Map<String, dynamic> json)
+      : id = json['id'],
+        title = json['title'] ?? '',
+        description = json['description'],
+        poster = json['poster'] ?? '',
+        rating = json['rating'].toString(),
+        favourite = json['favourite'];
+        
   static Map<String, dynamic> toMap(Movie movie) => {
+        'id': movie.id,
         'title': movie.title,
         'description': movie.description,
         'poster': movie.poster,
@@ -32,7 +45,7 @@ class Movie {
       );
   static List<Movie> decode(String movies) =>
       (json.decode(movies) as List<dynamic>)
-          .map<Movie>((item) => Movie.fromJson(item))
+          .map<Movie>((item) => Movie.fromStorage(item))
           .toList();
 
   @override

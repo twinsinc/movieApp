@@ -1,47 +1,41 @@
-import 'dart:collection';
-
 import 'package:flutter/cupertino.dart';
 import 'package:movie_app/models/movie_model.dart';
 import 'package:movie_app/services/store_service.dart';
 
 class MainModel extends ChangeNotifier {
-  
-  final List<Movie> favouriteMovies = [];
-  final List<Movie> _hiddenMovies = [];
-  /* set favouriteMovies(List<Movie> movies) {
-    favouriteMovies = movies;
-  } */
+  static late final List<Movie> _favouriteMovies;
+  get favouriteMovies => _favouriteMovies;
+  static late final List<Movie> _hiddenMovies;
+  get hiddenMovies => _hiddenMovies;
 
-  /* UnmodifiableListView<Movie> get favouriteMovies =>
-      UnmodifiableListView(favouriteMovies); */
+  static void init() {
+    String? storedFavouriteMovies = StorageService.getFavouriteMovies();
+    String? storedHiddenMovies = StorageService.getHiddenMovies();
+    storedFavouriteMovies == null
+        ? _favouriteMovies = []
+        : _favouriteMovies = Movie.decode(storedFavouriteMovies);
+    storedHiddenMovies == null
+        ? _hiddenMovies = []
+        : _hiddenMovies = Movie.decode(storedHiddenMovies);
+  }
 
-  void addMovie(Movie movie) async {
+  void addFavouriteMovie(Movie movie) {
     movie.favourite = true;
-    favouriteMovies.add(movie);
-    print(favouriteMovies);
+    _favouriteMovies.add(movie);
+    StorageService.setFavouriteMovies(Movie.encode(_favouriteMovies));
     notifyListeners();
   }
 
   void hideMovie(Movie movie) {
     _hiddenMovies.add(movie);
-    print(_hiddenMovies);
-    notifyListeners();
-  }
-
-  bool containsMovie(Movie movie) {
-    return favouriteMovies.contains(movie);
-  }
-
-  void unhideMovie(Movie movie) {
-    _hiddenMovies.remove(movie);
-    print(_hiddenMovies);
+    StorageService.setHiddenMovies(Movie.encode(_hiddenMovies));
     notifyListeners();
   }
 
   void removeMovie(Movie movie) {
-    favouriteMovies.remove(movie);
+    _favouriteMovies.remove(movie);
     movie.favourite = false;
-    print(favouriteMovies);
+    StorageService.setFavouriteMovies(Movie.encode(_favouriteMovies));
     notifyListeners();
   }
 }

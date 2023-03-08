@@ -27,37 +27,13 @@ class MovieCard extends StatelessWidget {
             height: 200,
             child: Row(
               children: [
-                CupertinoContextMenu(
-                  actions: <Widget>[
-                    CupertinoContextMenuAction(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      trailingIcon: CupertinoIcons.eye_slash,
-                      child: const Text('Hide'),
-                    ),
-                    movie.favourite
-                        ? CupertinoContextMenuAction(
-                            onPressed: () {
-                              Provider.of<MainModel>(context, listen: false)
-                                  .removeMovie(movie);
-                              Navigator.pop(context);
-                            },
-                            isDestructiveAction: true,
-                            trailingIcon: CupertinoIcons.delete,
-                            child: const Text('Unsave'),
-                          )
-                        : CupertinoContextMenuAction(
-                            onPressed: () {
-                              Provider.of<MainModel>(context, listen: false)
-                                  .addMovie(movie);
-                              Navigator.pop(context);
-                            },
-                            trailingIcon: CupertinoIcons.heart,
-                            child: const Text('Save'),
-                          ),
-                  ],
-                  child: Image.network(imagePath + movie.poster),
+                SizedBox(
+                  width: 130,
+                  child: movie.poster.isNotEmpty
+                      ? Image.network(imagePath + movie.poster)
+                      : Image.asset(
+                          'assets/images/no-poster-available.jpeg',
+                        ),
                 ),
                 Expanded(
                   child: Padding(
@@ -69,6 +45,8 @@ class MovieCard extends StatelessWidget {
                         Text(
                           movie.title,
                           style: titleStyle,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
                         const Text('Rating: '),
                         ShaderMask(

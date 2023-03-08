@@ -1,27 +1,21 @@
-/* import 'package:movie_app/models/movie_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class StoreService {
-  static late SharedPreferences prefs;
+class StorageService {
+  static late SharedPreferences _prefs;
+  static const _favouriteMoviesKey = 'favouriteMovies';
+  static const _hiddenMoviesKey = 'hiddenMovies';
 
-  static getInstance() async {
-    prefs = await SharedPreferences.getInstance();
-    return prefs;
+  static Future init() async => _prefs = await SharedPreferences.getInstance();
+
+  static Future setFavouriteMovies(String movies) async {
+    await _prefs.setString(_favouriteMoviesKey, movies);
   }
 
-  static void saveData(List<Movie> movies) async {
-    getInstance();
-    final String encodedData = Movie.encode(movies);
-
-    await prefs.setString('movies_key', encodedData);
+  static Future setHiddenMovies(String movies) async {
+    await _prefs.setString(_hiddenMoviesKey, movies);
   }
 
-  static Future<List<Movie>> fetchData() async {
-    final String? movieString = prefs.getString('movies_key');
-    final List<Movie> movies =
-        movieString != null ? Movie.decode(movieString) : [];
+  static String? getFavouriteMovies() => _prefs.getString(_favouriteMoviesKey);
 
-    return movies;
-  }
+  static String? getHiddenMovies() => _prefs.getString(_hiddenMoviesKey);
 }
- */
